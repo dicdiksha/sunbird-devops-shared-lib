@@ -20,7 +20,7 @@ def call(String buildStatus, String release_tag=null, String jobName=null, int b
                 if (jobName == null)
                     jobName = env.JOB_NAME
                 if (buildNumber == 0)
-                    buildNumber = env.BUILD_NUMBER
+                    buildNumberStr = env.BUILD_NUMBER
                 if (jobUrl == null)
                     jobUrl = env.JOB_URL
 
@@ -29,7 +29,7 @@ def call(String buildStatus, String release_tag=null, String jobName=null, int b
                         slackSend (
                                 channel: env.automated_slack_channel,
                                 color: slack_status,
-                                message: "$jobName - ${release_tag}, #$buildNumber, Logs: (<${jobUrl}|Open>)",
+                                message: "$jobName - ${release_tag}, #$buildNumberStr, Logs: (<${jobUrl}|Open>)",
                                 baseUrl: env.automated_slack_workspace,
                                 tokenCredentialId: 'automated_slack_token'
                         )
@@ -56,7 +56,7 @@ def call(String buildStatus, String release_tag=null, String jobName=null, int b
                     slackSend(
                             channel: slack_channel,
                             color: slack_status,
-                            message: "$jobName - ${release_tag}, #$buildNumber, Logs: (<${jobUrl}|Open>)",
+                            message: "$jobName - ${release_tag}, #$buildNumberStr, Logs: (<${jobUrl}|Open>)",
                     )
                     return
                 }
@@ -71,7 +71,7 @@ def call(String buildStatus, String release_tag=null, String jobName=null, int b
                     slackSend(
                             channel: "${env.GLOBAL_NOTIFY_SLACK_CHANNEL}",
                             color: slack_status,
-                            message: "$jobName - ${release_tag}, #$buildNumber, Logs: (<${jobUrl}|Open>)",
+                            message: "$jobName - ${release_tag}, #$buildNumberStr, Logs: (<${jobUrl}|Open>)",
                     )
                 }
                 else
